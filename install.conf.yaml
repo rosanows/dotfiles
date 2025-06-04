@@ -6,73 +6,73 @@
 - clean: ['~']
 
 - link:
-  ~/.dotfiles: ''
-  ~/.tmux.conf:
-    path: tmux/tmux.conf
-  ~/.Xresources:
-    path: X/Xresources
-  ~/bin/git-wtf:
-    create: true
-    path: bin/git-wtf
-  ~/bin/backlight.pl:
-    create: true
-    path: bin/backlight.pl
-  ~/bin/i3lock-wrapper:
-    create: true
-    path: bin/i3lock-wrapper
-  ~/bin/rustup.sh:
-    create: true
-    path: bin/rustup.sh
-  ~/bin/movieme:
-    create: true
-    path: bin/movieme
-  ~/.oh-my-zsh:
-    path: oh-my-zsh
-  ~/.dir_colors:
-    path: zsh/dircolors
-  ~/.zshrc:
-    path: zsh/zshrc
-  ~/.vim:
-    path: vim/vim
-  ~/.vimrc:
-    path: vim/vimrc
-  ~/.gitconfig:
-    path: git/gitconfig
-  ~/.config/i3/config:
-    create: true
-    path: i3/config
-  ~/.config/polybar/config:
-    create: true
-    path: polybar/config
-  ~/.config/polybar/launch.sh:
-    create: true
-    path: polybar/launch.sh
-  ~/.config/powerline:
-    create: true
-    path: powerline
-  ~/.gemrc:
-    path: ruby/gemrc
-  ~/.kde4/share/apps/konsole/Solarized\ Dark.colorscheme:
-    create: true
-    path: konsole-colors-solarized/Solarized Dark.colorscheme
-  ~/.kde4/share/apps/konsole/Solarized\ Light.colorscheme:
-    create: true
-    path: konsole-colors-solarized/Solarized Light.colorscheme
-  ~/.local/share/konsole/Profile 1.profile:
-    create: true
-    path: kde/Profile 1.profile
-  ~/.config/konsolerc:
-    create: true
-    path: kde/konsolerc
-  ~/.config/trizen/trizen.conf:
-    create: true
-    path: trizen/trizen.conf
-  ~/.config/deepin/deepin-terminal/config.conf:
-    create: true
-    path: deepin/terminal.conf
-  ~/.config/xfce4/terminal/terminalrc:
-    create: true
-    path: xfce4/terminalrc
+    ~/.dotfiles: ''
+    ~/.tmux.conf:
+      path: tmux/tmux.conf
+    ~/.Xresources:
+      path: X/Xresources
+    ~/bin/git-wtf:
+      create: true
+      path: bin/git-wtf
+    ~/bin/backlight.pl:
+      create: true
+      path: bin/backlight.pl
+    ~/bin/i3lock-wrapper:
+      create: true
+      path: bin/i3lock-wrapper
+    ~/bin/rustup.sh:
+      create: true
+      path: bin/rustup.sh
+    ~/bin/movieme:
+      create: true
+      path: bin/movieme
+    ~/.oh-my-zsh:
+      path: oh-my-zsh
+    ~/.dir_colors:
+      path: zsh/dircolors
+    ~/.zshrc:
+      path: zsh/zshrc
+    ~/.vim:
+      path: vim/vim
+    ~/.vimrc:
+      path: vim/vimrc
+    ~/.gitconfig:
+      path: git/gitconfig
+#  ~/.config/i3/config:
+#    create: true
+#    path: i3/config
+    ~/.config/polybar/config:
+      create: true
+      path: polybar/config
+    ~/.config/polybar/launch.sh:
+      create: true
+      path: polybar/launch.sh
+    ~/.config/powerline:
+      create: true
+      path: powerline
+    ~/.gemrc:
+      path: ruby/gemrc
+#  ~/.kde4/share/apps/konsole/Solarized\ Dark.colorscheme:
+#    create: true
+#    path: konsole-colors-solarized/Solarized Dark.colorscheme
+#  ~/.kde4/share/apps/konsole/Solarized\ Light.colorscheme:
+#    create: true
+#    path: konsole-colors-solarized/Solarized Light.colorscheme
+#  ~/.local/share/konsole/Profile 1.profile:
+#    create: true
+#    path: kde/Profile 1.profile
+#  ~/.config/konsolerc:
+#    create: true
+#    path: kde/konsolerc
+#  ~/.config/trizen/trizen.conf:
+#    create: true
+#    path: trizen/trizen.conf
+#  ~/.config/deepin/deepin-terminal/config.conf:
+#    create: true
+#    path: deepin/terminal.conf
+#  ~/.config/xfce4/terminal/terminalrc:
+#    create: true
+#    path: xfce4/terminalrc
 
 - shell:
     - gem install gifme
