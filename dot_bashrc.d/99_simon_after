@@ -1,0 +1,22 @@
+. "$HOME/.cargo/env"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+alias ls='eza'
+alias ll='eza -laa --icons'
+
+#cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+
+#eval `keychain --eval id_rsa id_ed25519`
+#[[ $- =~ i ]] && eval `keychain --eval id_rsa id_ed25519 3004D5F3CDF099D5A4D719A5E4D729878F4DEF52`
+[[ $- =~ i ]] && command -v keychain >/dev/null && eval `keychain --eval id_rsa id_ed25519`
+
+alias msfsinstall='(){protontricks -c "wine $1" 1250410 ;}'
+
+export PATH=${PATH}:${HOME}/go/bin
+
+export EDITOR=/usr/bin/vim
+
+# Kitty image preview
+if command -v kitten >/dev/null 2>&1; then
+  alias icat='kitten icat'
+fi
