@@ -1,4 +1,0 @@
-gem: --user-install
-install: --user-install
-update: --user-install
-uninstall: --user-install
