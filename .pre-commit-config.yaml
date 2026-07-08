@@ -3,7 +3,13 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
+      - id: check-case-conflict
       - id: check-executables-have-shebangs
+      - id: check-illegal-windows-names
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+      - id: check-yaml
       - id: check-merge-conflict
       - id: detect-private-key
       - id: end-of-file-fixer
