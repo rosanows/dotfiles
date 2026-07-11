@@ -1,0 +1,7 @@
+{{- if ne .chezmoi.hostname "icecrown" }}
+.config/kitty/icecrown.conf
+{{- end }}
+
+{{- if ne .chezmoi.hostname "mba" }}
+.config/kitty/mba.conf
+{{- end }}
