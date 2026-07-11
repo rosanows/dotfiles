@@ -1,0 +1,2 @@
+. /usr/share/bash-prexec
+[ "$(command -v zoxide)" ] && eval "$(zoxide init bash)"
