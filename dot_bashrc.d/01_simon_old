@@ -1,9 +1,5 @@
-DEFAULT_USER="simon"
-
 alias ll='ls -al --color=auto'
 alias rr='ssh -l root'
 alias 644='chmod 644'
 alias 755='chmod 755'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
-alias prove='PERL5OPT=-MAcme::require::case prove'
-alias proveall='prove -j9 --state=slow,save -lr t'

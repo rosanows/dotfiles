@@ -1,13 +1,30 @@
-. "$HOME/.cargo/env"
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+# Rust
+if [ -r "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
 
-command -v keychain >/dev/null && eval `keychain --eval id_rsa id_ed25519`
+# asdf
+asdf_shims="${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
+if [ -d "$asdf_shims" ] && [[ ":$PATH:" != *":$asdf_shims:"* ]]; then
+    PATH="$asdf_shims:$PATH"
+fi
+unset asdf_shims
 
-export PATH=${PATH}:${HOME}/go/bin
+# SSH keychain
+if command -v keychain >/dev/null 2>&1; then
+    eval "$(keychain --eval id_rsa id_ed25519)"
+fi
 
-export EDITOR=/usr/bin/vim
+# Go
+if [ -d "$HOME/go/bin" ] && [[ ":$PATH:" != *":$HOME/go/bin:"* ]]; then
+    PATH="$PATH:$HOME/go/bin"
+fi
+
+export PATH
+export EDITOR="${EDITOR:-vim}"
+export VISUAL="${VISUAL:-$EDITOR}"
 
 # Kitty image preview
 if command -v kitten >/dev/null 2>&1; then
-  alias icat='kitten icat'
+    alias icat='kitten icat'
 fi
