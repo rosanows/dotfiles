@@ -1,0 +1,31 @@
+# fzf shell integration
+
+{{- $isUbuntu2404 := and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.versionID "24.04") }}
+
+if command -v fzf >/dev/null; then
+{{- if $isUbuntu2404 }}
+  # Ubuntu 24.04's packaged fzf predates the `--bash` subcommand;
+  # fall back to the legacy integration scripts it ships instead.
+  [ -r /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash
+  [ -r /usr/share/doc/fzf/examples/completion.bash ] && . /usr/share/doc/fzf/examples/completion.bash
+{{- else }}
+  eval "$(fzf --bash)" 2>/dev/null
+{{- end }}
+
+export FZF_DEFAULT_OPTS="
+  --height=40%
+  --layout=reverse
+  --border
+"
+fi
+
+if command -v fd >/dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+if command -v bat >/dev/null; then
+  export FZF_CTRL_T_OPTS="
+    --preview 'bat --style=numbers --color=always --line-range :200 {}'
+  "
+fi

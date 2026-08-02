@@ -13,10 +13,10 @@ There is no build step, package manifest, linter invocation, or test runner beyo
 chezmoi maps repo filenames to target paths in `$HOME` using prefixes/suffixes. When adding or editing files, follow these existing conventions:
 
 - `dot_foo` → installed as `~/.foo` (e.g. `dot_bashrc` → `~/.bashrc`, `dot_gitconfig` → `~/.gitconfig`).
-- `dot_bashrc.d/*` → installed under `~/.bashrc.d/`; files are sourced in lexical order by `dot_bashrc`, hence the numeric prefixes (`02_direnv`, `10_aliases`, `30_fzf`, ...). A `remove_` prefix (see `dot_bashrc.d/remove_01_simon_old`) tells chezmoi to delete that target file from `$HOME` if present.
+- `dot_bashrc.d/*` → installed under `~/.bashrc.d/`; files are sourced in lexical order by `dot_bashrc`, hence the numeric prefixes (`02_direnv`, `10_aliases`, `30_fzf.tmpl`, ...). A `remove_` prefix (see `dot_bashrc.d/remove_01_simon_old`) tells chezmoi to delete that target file from `$HOME` if present.
 - `private_foo` → installed with restrictive permissions (0600), used for anything under `dot_ssh/`.
 - `executable_foo` → installed with the executable bit set (used in `bin/`, which maps to `~/bin/`).
-- `*.tmpl` → processed as a Go template before being written, with chezmoi data such as `.chezmoi.hostname` available (see `dot_config/kitty/kitty.conf.tmpl`, `dot_ssh/private_authorized_keys.tmpl`).
+- `*.tmpl` → processed as a Go template before being written, with chezmoi data such as `.chezmoi.hostname`, `.chezmoi.os`, and (on Linux) `.chezmoi.osRelease.id`/`.chezmoi.osRelease.versionID` available (see `dot_config/kitty/kitty.conf.tmpl`, `dot_ssh/private_authorized_keys.tmpl`, `dot_bashrc.d/30_fzf.tmpl` — the latter branches on `.chezmoi.osRelease` to work around an Ubuntu-24.04-specific fzf quirk). `and`/`or` short-circuit in chezmoi's Go template engine, so it's safe to check `.chezmoi.os` before dereferencing OS-specific fields in the same expression.
 - `.chezmoitemplates/` → reusable template partials, included from other templates via `{{ template "name" . }}` (see the `authorized_keys/*` partials, each one a per-device public key list).
 - `.chezmoiignore` → a templated list of paths to exclude from the target `$HOME` for the current machine. It's used here to skip installing the *other* host's kitty config (e.g. on `mba`, `icecrown.conf` is ignored, and vice versa) so only the config relevant to the current machine template renders.
 
