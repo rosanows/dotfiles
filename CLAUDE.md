@@ -48,7 +48,16 @@ macOS/Linux portability for Bash config is a stated goal (see commit "Make Bash 
 
 ## Pre-commit hooks
 
-`.pre-commit-config.yaml` defines the checks that must pass on commits: standard hygiene hooks (`check-added-large-files`, `check-case-conflict`, `check-merge-conflict`, `detect-private-key`, `end-of-file-fixer`, `mixed-line-ending`, `trailing-whitespace`, `check-json`/`check-toml`/`check-yaml`/`check-xml`) plus `yamllint` (relaxed mode, `-d relaxed`). Run `pre-commit run --all-files` before committing if pre-commit is installed locally.
+`.pre-commit-config.yaml` defines the checks that must pass on commits:
+
+- **Hygiene** (pre-commit-hooks): `check-added-large-files`, `check-case-conflict`, `check-executables-have-shebangs`, `check-illegal-windows-names`, `check-toml`, `check-yaml`, `check-merge-conflict`, `detect-private-key`, `end-of-file-fixer`, `mixed-line-ending`, `trailing-whitespace`. (`check-json`/`check-xml` were dropped — no such files tracked.)
+- **`yamllint`** — relaxed mode (`-d relaxed`).
+- **`shellcheck`** — scoped to the maintained bash only (`dot_bashrc`, `dot_bashrc.d/*`), forced to the bash dialect (`-s bash`) since those files have no shebang/extension. `.tmpl` files and vendored `bin/` scripts are excluded. `SC1090`/`SC1091` (can't-follow-source) are disabled.
+- **`shfmt`** — formats the same maintained bash to 4-space, case-indent (`-i 4 -ci`). Requires `shfmt` on PATH (`brew install shfmt`). Not applied to `bin/` (vendored) or `.tmpl`.
+- **`gitleaks`** — secret scanning (stronger than `detect-private-key`).
+- **`chezmoi-render`** (local) — runs `chezmoi apply --dry-run --source . --destination /tmp/...` to validate that all Go templates render without error, without touching `$HOME`. Requires `chezmoi` on PATH.
+
+Run `pre-commit run --all-files` before committing if pre-commit is installed locally. Bump pinned hook versions with `pre-commit autoupdate`.
 
 ## Working in this repo
 

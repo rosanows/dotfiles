@@ -6,9 +6,7 @@ repos:
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-illegal-windows-names
-      - id: check-json
       - id: check-toml
-      - id: check-xml
       - id: check-yaml
       - id: check-merge-conflict
       - id: detect-private-key
@@ -16,7 +14,41 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.28.0
+    rev: v1.38.0
     hooks:
       - id: yamllint
-        args: [-d relaxed]
+        args: [-d, relaxed]
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        # Maintained bash lives in dot_bashrc + dot_bashrc.d/* (no shebang, no
+        # extension) so override type detection and force the bash dialect.
+        # bin/ scripts are third-party/vendored and intentionally not linted.
+        # .tmpl files are chezmoi Go templates and are not valid shell.
+        types: [text]
+        files: ^dot_bashrc$|^dot_bashrc\.d/[^/]+$
+        exclude: \.tmpl$
+        # SC1090/SC1091: shellcheck can't follow sourced external files here.
+        args: [-s, bash, -e, "SC1090,SC1091"]
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+  - repo: local
+    hooks:
+      - id: shfmt
+        name: shfmt (format shell, 4-space)
+        # Same scope as shellcheck: maintained bash only, not vendored bin/ or
+        # .tmpl. Requires shfmt on PATH (brew install shfmt / go install).
+        entry: shfmt -w -i 4 -ci
+        language: system
+        types: [text]
+        files: ^dot_bashrc$|^dot_bashrc\.d/[^/]+$
+        exclude: \.tmpl$
+      - id: chezmoi-render
+        name: chezmoi apply --dry-run (validate templates)
+        entry: chezmoi apply --dry-run --source . --destination /tmp/chezmoi-precommit
+        language: system
+        pass_filenames: false
+        always_run: true
