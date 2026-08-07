@@ -1,0 +1,4 @@
+{{- $isBazzite := and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "bazzite") }}
+{{- if $isBazzite }}
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+{{- end }}
