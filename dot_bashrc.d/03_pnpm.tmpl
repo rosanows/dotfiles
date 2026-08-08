@@ -1,0 +1,8 @@
+{{- $isMacOS := eq .chezmoi.os "darwin" }}
+{{- if $isMacOS }}
+export PNPM_HOME="{{ .chezmoi.homeDir }}/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+{{- end }}
