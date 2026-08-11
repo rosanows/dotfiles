@@ -123,11 +123,16 @@ def purple s; $color ? "\033[35m#{s}\033[0m" : s end
 ## the set of commits in 'to' that aren't in 'from'.
 ## if empty, 'to' has been merged into 'from'.
 def commits_between from, to
-  if $long
-    `git log --pretty=format:"- %s [#{yellow "%h"}] (#{purple "%ae"}; %ar)" #{from}..#{to}`
+  format = if $long
+    "- %s [#{yellow "%h"}] (#{purple "%ae"}; %ar)"
   else
-    `git log --pretty=format:"- %s [#{yellow "%h"}]" #{from}..#{to}`
-  end.split(/[\r\n]+/)
+    "- %s [#{yellow "%h"}]"
+  end
+  ## from/to are ref names that can come from an untrusted remote (e.g. a
+  ## maliciously-named branch fetched from someone else's repo), so this
+  ## execs git directly with an argv array instead of interpolating them
+  ## into a backtick/shell string, to avoid shell command injection.
+  IO.popen(["git", "log", "--pretty=format:#{format}", "#{from}..#{to}"]) { |io| io.read }.split(/[\r\n]+/)
 end
 
 def show_commits commits, prefix="    "
