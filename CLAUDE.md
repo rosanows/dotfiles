@@ -40,7 +40,7 @@ macOS/Linux portability for Bash config is a stated goal (see commit "Make Bash 
 
 ## Other components
 
-- `bin/` — standalone executable scripts installed to `~/bin` (`git-wtf` for branch/remote status, `movieme` for animated GIFs from video via ffmpeg, `rustup.sh` — a vendored/legacy Rust installer script). These are third-party or long-lived personal scripts; treat their internal style as already established rather than reformatting.
+- `bin/` — standalone executable scripts installed to `~/bin` (`git-wtf` for branch/remote status, `movieme` for animated GIFs from video via ffmpeg). These are third-party or long-lived personal scripts; treat their internal style as already established rather than reformatting. `bin/remove_rustup.sh` is a `remove_` marker (see chezmoi naming conventions above) that deletes a previously-installed `~/bin/rustup.sh` — the vendored legacy Rust installer was dropped since it's been archived/deprecated upstream in favor of `rustup` (installed via `https://sh.rustup.rs`) since 2018.
 - `dot_gitconfig` — includes `~/.gitconfig_local` for machine-specific overrides; don't hardcode machine-specific values here.
 - `dot_ssh/private_config` — includes `~/.ssh/config_local` first, then applies hardened global `Ciphers`/`KexAlgorithms`/`MACs`/`HostKeyAlgorithms` for all hosts.
 - `dot_config/starship.toml` — Catppuccin-themed prompt; palette tables are intentionally kept at the end of the file (see in-file comment).
