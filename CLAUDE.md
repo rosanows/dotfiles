@@ -45,6 +45,7 @@ macOS/Linux portability for Bash config is a stated goal (see commit "Make Bash 
 - `dot_ssh/private_config` — includes `~/.ssh/config_local` first, then applies hardened global `Ciphers`/`KexAlgorithms`/`MACs`/`HostKeyAlgorithms` for all hosts.
 - `dot_config/starship.toml` — Catppuccin-themed prompt; palette tables are intentionally kept at the end of the file (see in-file comment).
 - `dot_gemrc` — forces `--user-install` for all `gem` operations (no system-wide installs).
+- `run_once_install-rustup.sh.tmpl` — a chezmoi `run_once_` script (top-level, not under a `dot_`/`private_`/`executable_` dir since scripts never get copied into `$HOME`) that installs `rustup` via Homebrew (`brew` on macOS, `/home/linuxbrew/.linuxbrew/bin/brew` on Bazzite) the first time `chezmoi apply` runs, deliberately avoiding a `curl | sh` install. It no-ops if `rustup` is already on `PATH` or if it can't find a Homebrew binary; chezmoi tracks that it ran (keyed on the rendered script's content hash) so it won't run again.
 
 ## Pre-commit hooks
 
