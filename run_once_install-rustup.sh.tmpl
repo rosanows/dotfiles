@@ -1,0 +1,19 @@
+{{- $brew := "brew" -}}
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "bazzite") -}}
+{{-   $brew = "/home/linuxbrew/.linuxbrew/bin/brew" -}}
+{{- end -}}
+#!/bin/sh
+set -eu
+
+# rustup manages its own toolchain updates afterward, so this only needs to
+# run once to get it installed via Homebrew's audited, checksummed formula
+# -- no curl-pipe-to-shell involved.
+if command -v rustup >/dev/null 2>&1; then
+    exit 0
+fi
+
+if command -v {{ $brew | quote }} >/dev/null 2>&1; then
+    {{ $brew | quote }} install rustup
+else
+    echo "rustup: Homebrew not found at {{ $brew }}; install manually: https://rust-lang.github.io/rustup/" >&2
+fi
