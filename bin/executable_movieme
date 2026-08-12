@@ -2,8 +2,8 @@
 #
 # MOVIE ME as in: "MOVIE ME AN ANIMATED GIF FROM THIS MOVIE, DAMMIT"
 #
-# Creates an animated gif from a movie file. Uploads to CloudApp. You must also
-# have `gifme` and `cloudapp` in your $PATH.
+# Creates an animated gif from a movie file, written next to the source file
+# with a .gif extension.
 #
 #   $1 - the path to the movie we're converting.
 #   $2 - the start time of the finished product.
@@ -17,13 +17,11 @@
 #   ~/Desktop/dr-strangelove.mp4 23:12 3
 #   ~/Desktop/holman-backflip-on-fire.mov 3.9 1.75
 
-# create a fresh, unpredictable tmp dir (a fixed /tmp/movieme path is
-# vulnerable to a symlink race: something could pre-create it as a symlink
-# and mkdir -p would happily write frames through it)
-tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/movieme.XXXXXX") || exit 1
+out="${1%.*}.gif"
 
-# split the movie into constituent frames
-ffmpeg -i "$1" -f image2 -vf "scale=iw*sar:ih" -ss $2 -t $3 -r 7 "$tmpdir"/d-%05d.png
-
-# ANIMATE
-gifme "$tmpdir"/* -d 0
+# single-pass extract + encode, using a generated palette for quality
+# (avoids the old frame-dir + gifme two-step, and the temp-file handling
+# that came with it)
+ffmpeg -y -ss "$2" -i "$1" -t "$3" \
+    -vf "fps=7,scale=iw*sar:ih:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+    -loop 0 "$out"
