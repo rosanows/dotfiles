@@ -5,3 +5,11 @@
 {{- if ne .chezmoi.hostname "mba" }}
 .config/kitty/mba.conf
 {{- end }}
+
+{{ if eq .chezmoi.os "linux" }}
+{{   if ne .chezmoi.osRelease.id "bazzite" }}
+.bashrc.d/98_bling
+{{   end }}
+{{ else }}
+.bashrc.d/98_bling
+{{ end }}
